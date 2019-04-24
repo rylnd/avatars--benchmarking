@@ -1,7 +1,10 @@
 #! /usr/bin/env bash
 
-for i in {1..1000}; do
+touch curl.csv
+echo -n > curl.csv
+echo "time_total,size_download" >> curl.csv
+
+for i in {1..100}; do
   identifier="identifier${i}"
-  echo ${identifier}
-  curl -s "localhost:3002/avatars/${identifier}" > /dev/null
+  curl -s "localhost:3002/avatars/${identifier}" -o /dev/null -w '%{time_total},%{size_download}\n' >> curl.csv
 done
